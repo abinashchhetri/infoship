@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify'; // Import Toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { assets } from "@/assets/assets";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -94,14 +95,14 @@ const Login = () => {
 
         <div className="flex justify-end mt-8">
           <img
-            src="/path-to-your-logo.png" // Adjust path if necessary
+            src={assets.logo} // Adjust path if necessary
             alt="Informatics College Logo"
             className="w-28"
           />
         </div>
       </div>
 
-      <ToastContainer /> {/* Toast container to display success/error messages */}
+  
     </div>
   );
 };
