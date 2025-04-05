@@ -11,8 +11,9 @@ const Home = () => {
       <h1 className="text-6xl font-serif text-center text-red-700 my-12">Infoship</h1>
 
       {/* Buttons */}
-      <div className="w-full max-w-md flex flex-col gap-6">
-        <button className="w-full bg-red-700 text-white text-xl py-4 rounded-lg hover:bg-red-800 transition duration-300 cursor-pointer">
+      <div className="w-full max-w-md flex flex-col gap-6"> 
+        <button  onClick={() => navigate("/companylogin")}
+        className="w-full bg-red-700 text-white text-xl py-4 rounded-lg hover:bg-red-800 transition duration-300 cursor-pointer">
           Company
         </button>
 
