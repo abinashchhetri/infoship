@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify'; // Import Toastify
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { assets } from "@/assets/assets";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    londonMetEmail: "",
+    email: "",
     password: "",
+    role: "student", // default role; can be adjusted dynamically later
   });
 
   const navigate = useNavigate();
@@ -24,27 +25,19 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare the data to send to the backend
-    const data = {
-      londonMetEmail: formData.londonMetEmail,
-      password: formData.password,
-    };
-
     try {
-      // Make the API request to the backend  
-      const response = await axios.post(
-        `http://localhost:8081/api/auth/login`, // Direct URL
-        data
-      );
+      const response = await axios.post("http://localhost:8081/api/auth/login", formData);
 
-      // Handle success
       console.log("Login successful:", response.data);
-      toast.success("Login successful! Redirecting to dashboard..."); // Show success toast
-      navigate("/"); // Redirect to the dashboard after successful login
+      toast.success("Login successful! Redirecting to dashboard...");
+
+      // You might want to store token/user info in localStorage here
+      // localStorage.setItem("token", response.data.token);
+
+      navigate("/"); // Redirect to dashboard
     } catch (error) {
-      // Handle error
       console.error("Error during login:", error.response?.data || error.message);
-      toast.error("Login failed! Please check your credentials and try again."); // Show error toast
+      toast.error("Login failed! Please check your credentials and try again.");
     }
   };
 
@@ -58,11 +51,12 @@ const Login = () => {
             <label className="block text-lg text-gray-800 font-medium">College Email:</label>
             <input
               type="email"
-              name="londonMetEmail"
-              value={formData.londonMetEmail}
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               placeholder="Enter your LondonMet email"
               className="w-full px-5 py-3 text-lg border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              required
             />
           </div>
 
@@ -75,8 +69,26 @@ const Login = () => {
               onChange={handleChange}
               placeholder="Enter your password"
               className="w-full px-5 py-3 text-lg border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              required
             />
           </div>
+
+          {/* Optional role selector if needed in the future */}
+          {/* 
+          <div className="mb-6">
+            <label className="block text-lg text-gray-800 font-medium">Role:</label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full px-5 py-3 text-lg border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            >
+              <option value="student">Student</option>
+              <option value="company">Company</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          */}
 
           <button
             type="submit"
@@ -95,14 +107,12 @@ const Login = () => {
 
         <div className="flex justify-end mt-8">
           <img
-            src={assets.logo} // Adjust path if necessary
+            src={assets.logo}
             alt="Informatics College Logo"
             className="w-28"
           />
         </div>
       </div>
-
-  
     </div>
   );
 };
