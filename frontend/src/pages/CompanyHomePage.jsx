@@ -2,7 +2,7 @@ import React from "react";
 
 const CompanyHomePage = () => {
     
-  const jobList = [1, 2]; // Dummy list for rendering multiple jobs
+  const jobList = [1, 2,3]; // Dummy list for rendering multiple jobs
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 md:p-12">
